@@ -1,6 +1,19 @@
 version: "2.2"
 
 services:
+  pet-clinic:
+    image: pet-clinic:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "9999:9999"
+# FIXME: sucks for some reason - db port is not exposed (probably define network explicitly)
+#    depends_on:
+#      - postgres
+#    environment:
+#      SPRING_PROFILES_ACTIVE: postgres
   mysql:
     image: mysql:8.2
     ports:
