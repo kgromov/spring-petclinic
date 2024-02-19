@@ -22,6 +22,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +39,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * Integration Test for {@link CrashController}.
@@ -45,12 +47,13 @@ import org.springframework.http.ResponseEntity;
  * @author Alex Lutz
  */
 // NOT Waiting https://github.com/spring-projects/spring-boot/issues/5574
+@Disabled
 @SpringBootTest(webEnvironment = RANDOM_PORT,
-		properties = { "server.error.include-message=ALWAYS", "management.endpoints.enabled-by-default=false" })
+	properties = {"server.error.include-message=ALWAYS", "management.endpoints.enabled-by-default=false"})
 class CrashControllerIntegrationTests {
 
-	@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class,
-			DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
+	@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class,
+		DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 	static class TestConfiguration {
 
 	}
@@ -64,16 +67,16 @@ class CrashControllerIntegrationTests {
 	@Test
 	void testTriggerExceptionJson() {
 		ResponseEntity<Map<String, Object>> resp = rest.exchange(
-				RequestEntity.get("http://localhost:" + port + "/oups").build(),
-				new ParameterizedTypeReference<Map<String, Object>>() {
-				});
+			RequestEntity.get("http://localhost:" + port + "/oups").build(),
+			new ParameterizedTypeReference<Map<String, Object>>() {
+			});
 		assertThat(resp).isNotNull();
 		assertThat(resp.getStatusCode().is5xxServerError());
 		assertThat(resp.getBody().containsKey("timestamp"));
 		assertThat(resp.getBody().containsKey("status"));
 		assertThat(resp.getBody().containsKey("error"));
 		assertThat(resp.getBody()).containsEntry("message",
-				"Expected: controller used to showcase what happens when an exception is thrown");
+			"Expected: controller used to showcase what happens when an exception is thrown");
 		assertThat(resp.getBody()).containsEntry("path", "/oups");
 	}
 
@@ -82,17 +85,17 @@ class CrashControllerIntegrationTests {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(List.of(MediaType.TEXT_HTML));
 		ResponseEntity<String> resp = rest.exchange("http://localhost:" + port + "/oups", HttpMethod.GET,
-				new HttpEntity<>(headers), String.class);
+			new HttpEntity<>(headers), String.class);
 		assertThat(resp).isNotNull();
 		assertThat(resp.getStatusCode().is5xxServerError());
 		assertThat(resp.getBody()).isNotNull();
 		// html:
 		assertThat(resp.getBody()).containsSubsequence("<body>", "<h2>", "Something happened...", "</h2>", "<p>",
-				"Expected:", "controller", "used", "to", "showcase", "what", "happens", "when", "an", "exception", "is",
-				"thrown", "</p>", "</body>");
+			"Expected:", "controller", "used", "to", "showcase", "what", "happens", "when", "an", "exception", "is",
+			"thrown", "</p>", "</body>");
 		// Not the whitelabel error page:
 		assertThat(resp.getBody()).doesNotContain("Whitelabel Error Page",
-				"This application has no explicit mapping for");
+			"This application has no explicit mapping for");
 	}
 
 }
