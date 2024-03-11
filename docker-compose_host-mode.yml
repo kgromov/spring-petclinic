@@ -3,12 +3,11 @@ version: "2.2"
 services:
   pet-clinic:
     image: pet-clinic:latest
+    # prometheus is still not visible (fixes db services visibility)
+    network_mode: "host"
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-      - "9999:9999"
     depends_on:
       - prometheus
 #      - postgres
@@ -16,35 +15,25 @@ services:
 #      SPRING_PROFILES_ACTIVE: postgres
   mysql:
     image: mysql:8.2
-    ports:
-      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
       - MYSQL_USER=petclinic
       - MYSQL_PASSWORD=petclinic
       - MYSQL_DATABASE=petclinic
-      - SERVER_ADDRESS=172.28.185.108
     volumes:
       - "./conf.d:/etc/mysql/conf.d:ro"
     profiles:
       - mysql
   postgres:
     image: postgres:16.1
-    ports:
-      - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=petclinic
       - POSTGRES_USER=petclinic
       - POSTGRES_DB=petclinic
-      - SERVER_ADDRESS=172.28.185.108
     profiles:
       - postgres
   prometheus:
     image: prom/prometheus
     volumes:
       - "./prometheus.yml:/etc/prometheus/prometheus.yml"
-    ports:
-      - 9090:9090
-    environment:
-      SERVER_ADDRESS: 172.28.185.108
