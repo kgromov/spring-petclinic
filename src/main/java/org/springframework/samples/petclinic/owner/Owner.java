@@ -18,6 +18,8 @@ package org.springframework.samples.petclinic.owner;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.samples.petclinic.model.Person;
 import org.springframework.util.Assert;
@@ -33,6 +35,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
+
 /**
  * Simple JavaBean domain object representing an owner.
  *
@@ -43,6 +47,7 @@ import jakarta.validation.constraints.NotBlank;
  * @author Oliver Drotbohm
  */
 @Entity
+@Audited
 @Table(name = "owners")
 public class Owner extends Person {
 

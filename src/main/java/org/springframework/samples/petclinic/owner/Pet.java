@@ -20,6 +20,9 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.model.NamedEntity;
 
@@ -33,6 +36,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
+
 /**
  * Simple business object representing a pet.
  *
@@ -42,6 +47,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "pets")
+@Audited
 public class Pet extends NamedEntity {
 
 	@Column(name = "birth_date")
@@ -50,11 +56,13 @@ public class Pet extends NamedEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "type_id")
+	@Audited(targetAuditMode = NOT_AUDITED)
 	private PetType type;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "pet_id")
 	@OrderBy("visit_date ASC")
+	@NotAudited
 	private Set<Visit> visits = new LinkedHashSet<>();
 
 	public void setBirthDate(LocalDate birthDate) {
