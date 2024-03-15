@@ -23,25 +23,12 @@ public class OwnerAuditRestController {
 
 	@GetMapping("/{id}/revisions")
 	public List<RevisionMetadata> getOwnerRevisions(@PathVariable Integer id) {
-		/*return ownerRepository.findRevisions(id)
-			.stream()
-			.map(revision -> new RevisionMetadata(
-				revision.getRequiredRevisionNumber(),
-				revision.getRequiredRevisionInstant(),
-				revision.getMetadata().getRevisionType())
-			)
-			.toList();*/
 		return ownerRepository.getRevisionsMetadata(id);
 	}
 
-	@GetMapping("/{id}/history")
-	public List<String> getOwnerAddressHistory(@PathVariable Integer id) {
 		// as alternative
-		List<Owner> owners = auditRepository.getRevisionsById(Owner.class, id);
-		return ownerRepository.findRevisions(id)
-			.stream()
-			.map(Revision::getEntity)
-			.map(Owner::getAddress)
-			.toList();
+	@GetMapping("/{id}/revisions/envers")
+	public List<RevisionMetadata> getOwnerRevisionsWithEnvers(@PathVariable Integer id) {
+		return this.auditRepository.getRevisionsMetadata(Owner.class, id);
 	}
 }

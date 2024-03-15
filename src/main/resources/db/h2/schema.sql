@@ -70,12 +70,29 @@ create table revinfo
   revtstmp bigint
 );
 
-create table owners_aud (
+/*create table owners_aud (
   id integer not null,
   rev integer not null,
   revtype tinyint,
   address varchar(255),
   city varchar(255),
+  telephone varchar(255),
+  primary key (id, rev)
+);*/
+create table owners_aud (
+  address_mod boolean,
+  city_mod boolean,
+  first_name_mod boolean,
+  id integer not null,
+  last_name_mod boolean,
+  pets_mod boolean,
+  rev integer not null,
+  revtype tinyint,
+  telephone_mod boolean,
+  address varchar(255),
+  city varchar(255),
+  first_name varchar(255),
+  last_name varchar(255),
   telephone varchar(255),
   primary key (id, rev)
 );

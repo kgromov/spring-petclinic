@@ -18,6 +18,7 @@ package org.springframework.samples.petclinic.owner;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
 import org.springframework.core.style.ToStringCreator;
@@ -47,7 +48,7 @@ import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
  * @author Oliver Drotbohm
  */
 @Entity
-@Audited
+@Audited(withModifiedFlag = true, auditParents =  {Person.class})
 @Table(name = "owners")
 public class Owner extends Person {
 
