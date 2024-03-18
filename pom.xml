@@ -34,6 +34,7 @@
     <maven-checkstyle.version>3.3.1</maven-checkstyle.version>
     <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
     <spring-format.version>0.0.40</spring-format.version>
+    <data-source-decorator>1.9.1</data-source-decorator>
   </properties>
 
   <dependencies>
@@ -109,6 +110,30 @@
     <dependency>
       <groupId>org.hibernate.orm</groupId>
       <artifactId>hibernate-micrometer</artifactId>
+    </dependency>
+
+
+    <!-- spring-boot-data-source-decorator -->
+    <dependency>
+      <groupId>com.github.gavlyukovskiy</groupId>
+      <artifactId>p6spy-spring-boot-starter</artifactId>
+      <version>${data-source-decorator}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.gavlyukovskiy</groupId>
+      <artifactId>datasource-proxy-spring-boot-starter</artifactId>
+      <version>${data-source-decorator}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.gavlyukovskiy</groupId>
+      <artifactId>flexy-pool-spring-boot-starter</artifactId>
+      <version>${data-source-decorator}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.vladmihalcea.flexy-pool</groupId>
+          <artifactId>flexy-dropwizard-metrics</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- Webjars -->
