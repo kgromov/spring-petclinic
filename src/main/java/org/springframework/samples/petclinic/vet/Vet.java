@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jmolecules.architecture.layered.DomainLayer;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.samples.petclinic.model.Person;
@@ -43,6 +44,7 @@ import jakarta.xml.bind.annotation.XmlElement;
  */
 @Entity
 @Table(name = "vets")
+@DomainLayer
 public class Vet extends Person {
 
 	@ManyToMany(fetch = FetchType.EAGER)

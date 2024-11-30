@@ -2,15 +2,16 @@ package org.springframework.samples.petclinic.config;
 
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.SpecVersion;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import org.jmolecules.architecture.layered.InfrastructureLayer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import static io.swagger.v3.oas.models.SpecVersion.V31;
 
 @Configuration
+@InfrastructureLayer
 public class OpenApiConfig {
 
 	@Bean

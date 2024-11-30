@@ -4,6 +4,7 @@ import net.ttddyy.dsproxy.ExecutionInfo;
 import net.ttddyy.dsproxy.QueryInfo;
 import net.ttddyy.dsproxy.listener.QueryExecutionListener;
 import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
+import org.jmolecules.architecture.layered.InfrastructureLayer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Profile("play")
 @Configuration
+@InfrastructureLayer
 public class DataSourceDecoratorConfig {
 	private static final Logger log = LoggerFactory.getLogger(DataSourceDecoratorConfig.class);
 

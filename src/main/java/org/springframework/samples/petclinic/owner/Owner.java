@@ -21,6 +21,7 @@ import java.util.List;
 import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
+import org.jmolecules.architecture.layered.DomainLayer;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.samples.petclinic.model.Person;
 import org.springframework.util.Assert;
@@ -50,6 +51,7 @@ import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
 @Entity
 @Audited(withModifiedFlag = true, auditParents =  {Person.class})
 @Table(name = "owners")
+@DomainLayer
 public class Owner extends Person {
 
 	@Column(name = "address")

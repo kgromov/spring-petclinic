@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.vet;
 
 import java.util.List;
 
+import org.jmolecules.architecture.layered.ApplicationLayer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author Arjen Poutsma
  */
 @Controller
+@ApplicationLayer
 class VetController {
 
 	private final VetRepository vetRepository;

@@ -23,6 +23,7 @@ import java.util.Set;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.hibernate.envers.RelationTargetAuditMode;
+import org.jmolecules.architecture.layered.DomainLayer;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.model.NamedEntity;
 
@@ -48,6 +49,7 @@ import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
 @Entity
 @Table(name = "pets")
 @Audited
+@DomainLayer
 public class Pet extends NamedEntity {
 
 	@Column(name = "birth_date")

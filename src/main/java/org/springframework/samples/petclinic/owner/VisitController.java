@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.owner;
 
 import java.util.Map;
 
+import org.jmolecules.architecture.layered.ApplicationLayer;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -37,6 +38,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @author Dave Syer
  */
 @Controller
+@ApplicationLayer
 class VisitController {
 
 	private final OwnerRepository owners;

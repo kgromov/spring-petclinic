@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.owner;
 
+import org.jmolecules.architecture.layered.ApplicationLayer;
 import org.springframework.data.history.Revision;
 import org.springframework.samples.petclinic.audit.AuditRepository;
 import org.springframework.samples.petclinic.audit.RevisionMetadata;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/audit/owners")
+@ApplicationLayer
 public class OwnerAuditRestController {
 	private final OwnerRepository ownerRepository;
 	private final AuditRepository auditRepository;

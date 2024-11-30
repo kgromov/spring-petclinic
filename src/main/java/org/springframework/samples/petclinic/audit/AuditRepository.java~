@@ -6,10 +6,13 @@ import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.DefaultRevisionEntity;
 import org.hibernate.envers.query.AuditEntity;
+import org.hibernate.envers.query.order.AuditOrder;
+import org.hibernate.envers.query.order.internal.PropertyAuditOrder;
 import org.jmolecules.architecture.layered.DomainLayer;
-import org.springframework.data.history.RevisionMetadata.RevisionType;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
+import org.springframework.data.history.RevisionMetadata.RevisionType;
+
 
 import java.util.ArrayList;
 import java.util.List;

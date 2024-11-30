@@ -16,10 +16,12 @@
 
 package org.springframework.samples.petclinic.system;
 
+import org.jmolecules.architecture.layered.ApplicationLayer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
+@ApplicationLayer
 class WelcomeController {
 
 	@GetMapping("/")
