@@ -18,6 +18,7 @@ package org.springframework.samples.petclinic.owner;
 import java.util.List;
 import java.util.Map;
 
+import io.micrometer.core.annotation.Timed;
 import org.jmolecules.architecture.layered.ApplicationLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -85,10 +86,15 @@ class OwnerController {
 		return "redirect:/owners/" + owner.getId();
 	}
 
+	@Timed(value = "micrometer.endpoint.time", description = "Duration of the Micrometer endpoint")
+
 	@GetMapping("/owners/find")
 	public String initFindForm() {
 		return "owners/findOwners";
 	}
+
+
+	@Timed(value = "micrometer.endpoint.time", description = "Duration of the Micrometer endpoint")
 
 	@GetMapping("/owners")
 	public String processFindForm(@RequestParam(defaultValue = "1") int page, Owner owner, BindingResult result,

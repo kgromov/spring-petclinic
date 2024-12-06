@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.owner;
 
+import io.micrometer.core.annotation.Timed;
 import org.jmolecules.architecture.layered.ApplicationLayer;
 import org.springframework.data.history.Revision;
 import org.springframework.samples.petclinic.audit.AuditRepository;
@@ -23,12 +24,14 @@ public class OwnerAuditRestController {
         this.auditRepository = auditRepository;
     }
 
+	@Timed(value = "micrometer.endpoint.time", description = "Duration of the Micrometer endpoint")
 	@GetMapping("/{id}/revisions")
 	public List<RevisionMetadata> getOwnerRevisions(@PathVariable Integer id) {
 		return ownerRepository.getRevisionsMetadata(id);
 	}
 
-		// as alternative
+	@Timed(value = "micrometer.endpoint.time", description = "Duration of the Micrometer endpoint")
+	// as alternative
 	@GetMapping("/{id}/revisions/envers")
 	public List<RevisionMetadata> getOwnerRevisionsWithEnvers(@PathVariable Integer id) {
 		return this.auditRepository.getRevisionsMetadata(Owner.class, id);
