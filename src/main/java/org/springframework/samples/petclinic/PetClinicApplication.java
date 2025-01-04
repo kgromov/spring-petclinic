@@ -18,11 +18,8 @@ package org.springframework.samples.petclinic;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportRuntimeHints;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-
-import java.util.Locale;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
  * PetClinic Spring Boot Application.
@@ -30,6 +27,7 @@ import java.util.Locale;
  * @author Dave Syer
  *
  */
+@EnableJpaAuditing
 @SpringBootApplication
 @ImportRuntimeHints(PetClinicRuntimeHints.class)
 public class PetClinicApplication {
