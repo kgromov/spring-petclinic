@@ -19,6 +19,9 @@ import java.io.Serializable;
 import java.time.Instant;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SourceType;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -41,14 +44,16 @@ public class BaseEntity implements Serializable {
 	private Integer id;
 
 	@CreatedBy
-	@Column(name = "created_by", nullable = false, length = 50, updatable = false)
+	@Column(name = "created_by", length = 50, updatable = false)
 	private String createdBy = "SYSTEM";
 
 	@CreatedDate
+	@CreationTimestamp(source = SourceType.DB)
 	@Column(name = "created_date", updatable = false)
 	private Instant createdDate = Instant.now();
 
 	@LastModifiedBy
+	@UpdateTimestamp(source = SourceType.DB)
 	@Column(name = "last_modified_by", length = 50)
 	private String lastModifiedBy;
 
