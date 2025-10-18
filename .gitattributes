@@ -1,5 +1,5 @@
 mvnw            text eol=lf
 *.java          text eol=lf
-
 /gradlew        text eol=lf
 *.bat           text eol=crlf
+; src/main/resources/db/sqlite/petclinic.sqlite3 filter=lfs diff=lfs merge=lfs -text
