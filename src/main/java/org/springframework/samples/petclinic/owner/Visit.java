@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2019 the original author or authors.
+ * Copyright 2012-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Simple JavaBean domain object representing a visit.
@@ -39,10 +40,10 @@ public class Visit extends BaseEntity {
 
 	@Column(name = "visit_date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate date;
+	private @Nullable LocalDate date;
 
 	@NotBlank
-	private String description;
+	private @Nullable String description;
 
 	/**
 	 * Creates a new instance of Visit for the current date
@@ -51,19 +52,19 @@ public class Visit extends BaseEntity {
 		this.date = LocalDate.now();
 	}
 
-	public LocalDate getDate() {
+	public @Nullable LocalDate getDate() {
 		return this.date;
 	}
 
-	public void setDate(LocalDate date) {
+	public void setDate(@Nullable LocalDate date) {
 		this.date = date;
 	}
 
-	public String getDescription() {
+	public @Nullable String getDescription() {
 		return this.description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(@Nullable String description) {
 		this.description = description;
 	}
 

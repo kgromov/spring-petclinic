@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2019 the original author or authors.
+ * Copyright 2012-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,17 +25,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.audit.ReflectionFieldUtils;
 import org.springframework.samples.petclinic.audit.RevisionMetadata;
 import org.springframework.samples.petclinic.model.BaseEntity;
-import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
 /**
- * Repository class for <code>Owner</code> domain objects All method names are compliant
+ * Repository class for <code>Owner</code> domain objects. All method names are compliant
  * with Spring Data naming conventions so this interface can easily be extended for Spring
  * Data. See:
  * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation
@@ -44,6 +42,7 @@ import static java.util.stream.Collectors.toSet;
  * @author Juergen Hoeller
  * @author Sam Brannen
  * @author Michael Isvy
+ * @author Wick Dynex
  */
 public interface OwnerRepository extends
 	Repository<Owner, Integer>,
@@ -77,9 +76,11 @@ public interface OwnerRepository extends
 	 *
 	 * @param id the id to search for
 	 * @return the {@link Owner} if found
-	 */
+//	 */
 	@Query("SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id =:id")
-	Owner findById(@Param("id") Integer id);
+	Owner findOwnerById(@Param("id") Integer id);
+
+	Optional<Owner> findById(Integer id);
 
 	/**
 	 * Save an {@link Owner} to the data store, either inserting or updating it.
@@ -107,11 +108,11 @@ public interface OwnerRepository extends
 				Arrays.stream(revision.getEntity().getClass().getDeclaredFields()).map(Field::getName).collect(toSet())
 			)).collect(toList());
 		for (int i = 1; i < revisions.size(); i++) {
-            var prevRevision = revisions.get(i - 1);
+			var prevRevision = revisions.get(i - 1);
 			var currentRevision = revisions.get(i);
-            var prevRevisionState = ReflectionFieldUtils.getObjectValuesByField(prevRevision.getEntity(), BaseEntity.class);
+			var prevRevisionState = ReflectionFieldUtils.getObjectValuesByField(prevRevision.getEntity(), BaseEntity.class);
 			var currentRevisionState = ReflectionFieldUtils.getObjectValuesByField(currentRevision.getEntity(), BaseEntity.class);
-            var modifiedFields = currentRevisionState.entrySet()
+			var modifiedFields = currentRevisionState.entrySet()
 				.stream()
 				.filter(entry -> !this.isProxyClass(entry.getValue().getClass()))
 				.filter(entry -> !Objects.equals(entry.getValue(), prevRevisionState.get(entry.getKey())))
@@ -131,4 +132,15 @@ public interface OwnerRepository extends
 		String classSimpleName = clazz.getSimpleName();
 		return clazz.getName().contains(".proxy.") || classSimpleName.contains("$") || classSimpleName.contains("@");
 	}
+
+
+	/**
+	 * Retrieve {@link Owner}s from the data store by last name, returning all owners
+	 * whose last name <i>starts</i> with the given name.
+	 * @param lastName Value to search for
+	 * @return a Collection of matching {@link Owner}s (or an empty Collection if none
+	 * found)
+	 */
+	Page<Owner> findByLastNameStartingWith(String lastName, Pageable pageable);
+
 }
