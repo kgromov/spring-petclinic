@@ -11,6 +11,8 @@ services:
       - MYSQL_DATABASE=petclinic
     volumes:
       - "./conf.d:/etc/mysql/conf.d:ro"
+    profiles:
+      - mysql
   postgres:
     image: postgres:18.0
     ports:
@@ -26,6 +28,6 @@ services:
     volumes:
       - "./prometheus.yml:/etc/prometheus/prometheus.yml"
     ports:
-      - 9090:9090
+      - "9090:9090"
     profiles:
       - metrics
