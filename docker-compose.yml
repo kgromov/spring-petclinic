@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: mysql:8.4
+    image: mysql:9.2
     ports:
       - "33061:3306"
     environment:
@@ -14,7 +14,7 @@ services:
     profiles:
       - mysql
   postgres:
-    image: postgres:16.3
+    image: postgres:18.0
     ports:
       - "5432:5432"
     environment:
@@ -28,6 +28,6 @@ services:
     volumes:
       - "./prometheus.yml:/etc/prometheus/prometheus.yml"
     ports:
-      - 9090:9090
+      - "9090:9090"
     profiles:
       - metrics

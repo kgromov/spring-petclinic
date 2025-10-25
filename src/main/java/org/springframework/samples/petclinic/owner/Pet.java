@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2019 the original author or authors.
+ * Copyright 2012-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
+import org.jspecify.annotations.Nullable;
 
 import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
 
@@ -45,6 +46,7 @@ import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
  * @author Ken Krebs
  * @author Juergen Hoeller
  * @author Sam Brannen
+ * @author Wick Dynex
  */
 @Entity
 @Table(name = "pets")
@@ -54,32 +56,32 @@ public class Pet extends NamedEntity {
 
 	@Column(name = "birth_date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate birthDate;
+	private @Nullable LocalDate birthDate;
 
 	@ManyToOne
 	@JoinColumn(name = "type_id")
 	@Audited(targetAuditMode = NOT_AUDITED)
-	private PetType type;
+	private @Nullable PetType type;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "pet_id")
-	@OrderBy("visit_date ASC")
+	@OrderBy("date ASC")
 	@NotAudited
 	private Set<Visit> visits = new LinkedHashSet<>();
 
-	public void setBirthDate(LocalDate birthDate) {
+	public void setBirthDate(@Nullable LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 
-	public LocalDate getBirthDate() {
+	public @Nullable LocalDate getBirthDate() {
 		return this.birthDate;
 	}
 
-	public PetType getType() {
+	public @Nullable PetType getType() {
 		return this.type;
 	}
 
-	public void setType(PetType type) {
+	public void setType(@Nullable PetType type) {
 		this.type = type;
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2019 the original author or authors.
+ * Copyright 2012-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@ package org.springframework.samples.petclinic.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotBlank;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Simple JavaBean domain object adds a name property to <code>BaseEntity</code>. Used as
@@ -24,24 +26,27 @@ import jakarta.persistence.MappedSuperclass;
  *
  * @author Ken Krebs
  * @author Juergen Hoeller
+ * @author Wick Dynex
  */
 @MappedSuperclass
 public class NamedEntity extends BaseEntity {
 
 	@Column(name = "name")
-	private String name;
+	@NotBlank
+	private @Nullable String name;
 
-	public String getName() {
+	public @Nullable String getName() {
 		return this.name;
 	}
 
-	public void setName(String name) {
+	public void setName(@Nullable String name) {
 		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-		return this.getName();
+		String name = this.getName();
+		return (name != null) ? name : "<null>";
 	}
 
 }
